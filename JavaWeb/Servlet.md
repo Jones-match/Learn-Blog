@@ -663,3 +663,158 @@ response.sendRedirect("/") 把/ 发送给浏览器解析，得到http://ip:port/
 
 # HttpServletResponse 类
 
+和HttpServletRequest 同时传入
+
+每次请求进来，都会创建一个
+
+表示所有响应的信息
+
+如果需要设置返回给客户端的信息，都可以通过Response 对象来进行设置
+
+
+
+## 流
+
+通过流传递给客户端
+
+有两个响应流（输出给客户端）
+
+字节流
+
+​	getOutputStream();
+
+​	传递二进制数据，常用于下载
+
+字符流
+
+​	getWriter()
+
+​	回传字符串
+
+两个流同时只能使用一个，如果同时使用会报错
+
+
+
+想返回给客户端数据，先要创建一个流
+
+回传字符串数据，创建字符流
+
+```
+writer.write("data")
+```
+
+
+
+**响应的乱码**
+
+如果直接在内容里写中文，返回的会是	?????
+
+默认的编码集是ISO-8859-1，这是一个拉丁字符集
+
+```
+response.setCharaterEncoding("utf8");
+```
+
+设置服务器的字符集是utf8
+
+设置的只是服务器的字符集，如果与浏览器的字符集不统一，会变成另一种乱码（浏览器默认是GBK）
+
+​		可以在浏览器进行修改字符集
+
+
+
+也可以通过响应头，设置浏览器的字符集
+
+```
+response.setHeader("Content-Type", "text/html; charset=uft8");
+```
+
+​	不会区分大小写，utf8也可以，UTF-8也可以
+
+
+
+```
+response.setContentType("text/html; charset=utf8");
+```
+
+这一行代码，会同时设置服务器和浏览器的字符集为utf-8
+
+这个方法一定要在获取流对象前调用才有效
+
+```
+response.setContentType("text/html; charset=utf8");
+response.getWriter(); //必须是这个顺序
+```
+
+
+
+
+
+## 请求重定向
+
+客户端给服务器发请求，服务器告诉客户端另一个新地址访问（因为之前的地址可能已经被废弃）
+
+
+
+响应码302 表示重定向
+
+
+
+
+
+1. 浏览器向原来旧的地址发起请求
+2. 旧的地址会返回响应状态码和新的地址
+3. 浏览器解析该返回的信息，之后再次发起新的请求，这次请求的地址就是新的地址
+4. 最终的结果是由第二次请求的地址返回
+5. 浏览器获取第二次的结果，并显示在页面上
+
+
+
+![image-20240123194524477](image/Servlet/image-20240123194524477.png)
+
+
+
+两个地址，则需要两个Servlet 进行操作
+
+第一种方法：
+
+旧的Servlet:
+
+```
+response.setStatus(302)
+
+response.setHeader("Location", "新的地址") (http://localhost:8080/工程名/新的Servlet)
+```
+
+新的Servlet:
+
+```
+// 处理请求
+response.getWriter().write("处理的结果");
+
+```
+
+
+
+重定向的第二种方法：
+
+```
+response.sentRedirect("新的地址");
+```
+
+
+
+重定向的特点:
+
+1. 地址栏会发生变化
+2. 会有两次请求
+3. 不共享Request 域中的数据  (setAttribute() 设置之后，在第二次的Servlet 中是无法得到的)
+    1. Tomcat 在每次请求的时候，会封装一个**新的**Request 对象，在这个对象中，Request域是共享的
+4. 不可以跳到WEB-INF 中的资源中 （与请求转发是不一样的）
+5. 可以跳到工程以外的地址（比如：www.baidu.com)
+    1. localhost:8080  后面不加工程路径就是在工程以外的
+
+
+
+
+
