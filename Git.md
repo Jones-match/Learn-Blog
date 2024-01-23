@@ -389,7 +389,7 @@ $ git push -u origin master
 
 将当前分支master 提交到了远程库中
 
-第一次推送master 分支时，-u 可以将本地的master 和远程的master 关联起来，以后的推送和拉取可以简化命令
+第一次推送master 分支时，-u 可以将本地的master 和远程的master 关联起来，以后的推送和拉取可以简化命令（之后可以使用命令git push origin main即可，不用再写SSH地址了）
 
 
 
@@ -485,3 +485,34 @@ error: remote origin already exists.表示远程仓库已存在。
 1、先输入git remote rm origin 删除关联的origin的远程库
 2、关联自己的仓库 git remote add origin https://gitee.com/xxxxxx.git
 3、最后git push origin master，这样就推送到自己的仓库了。
+
+
+
+
+
+## **src refspec master does not match any**
+
+```
+$ git push -u origin master
+
+error: src refspec master does not match any
+error: failed to push some refs to 'github.com:Jones-match/Learn-Blog.git'
+
+```
+
+
+
+远程仓库中并没有master 这个分支
+
+在GitHub 的setting 中，默认生成的主分支是main
+
+![image-20240123093202417](image/Git/image-20240123093202417.png)
+
+
+
+### 解决方法
+
+使用 git branch -al 查看都有哪些分支
+
+选一个除了master之外的分支进行上传
+
