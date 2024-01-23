@@ -54,6 +54,15 @@ git config --global color.ui auto
 
 
 
+
+
+## 配置
+
+%homedrive%指操作系统所在盘
+%homepath%指\Documents and Settings(user)，这里的user指你的系统用户名
+
+
+
 # GitHub 用户设置
 
 查看自己的ID
