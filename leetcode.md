@@ -14,9 +14,11 @@ https://blog.csdn.net/zhangqi6627/article/details/107818070
 
 
 
-# List 转数组[]
+# 数组转换
 
-## 1. 列表的toArray() 方法 --> 这里是二维数组
+## List 转int[]
+
+### 1. 列表的toArray() 方法 --> 这里是二维数组
 
 [406. 根据身高重建队列](https://leetcode.cn/problems/queue-reconstruction-by-height/ "\406. 根据身高重建队列")
 
@@ -45,11 +47,43 @@ class Solution {
 
 实现List 的所有类都可以使用
 
-## 2.列表有stream()方法 ---> 这个是一维数组
+### 2.列表有stream()方法 ---> 这个是一维数组
 
 ```
 list.stream().mapToInt(Integer::intValue).toArray()
 ```
+
+
+
+```
+list.stream().mapToInt(i -> i).toArray()
+```
+
+
+
+## int[] 转 List
+
+```
+List<Integer> list1 = Arrays.stream(arr).boxed().collect(Collectors.toList());
+```
+
+
+
+
+
+## int[] 转 Integer[] 
+
+在Arrays.sort中，如果想使用new Comparator来指定排序规则的话，是不能直接使用基本数据类型int来完成
+
+​			基本数据类型并**不能泛型化**
+
+因此需要将这个基本类型的数组转化成Integer 数组
+
+```java
+Integer[] newNums = Arrays.stream(nums).boxed().toArray(Integer[]::new);
+```
+
+
 
 
 
@@ -76,18 +110,6 @@ Integer.toString(number);
 乱序介于两者之间
 
 
-
-# int[] 转 Integer[] 
-
-在Arrays.sort中，如果想使用new Comparator来指定排序规则的话，是不能直接使用基本数据类型int来完成
-
-​			基本数据类型并**不能泛型化**
-
-因此需要将这个基本类型的数组转化成Integer 数组
-
-```java
-Integer[] newNums = Arrays.stream(nums).boxed().toArray(Integer[]::new);
-```
 
 
 
@@ -193,3 +215,9 @@ while i < n:
 - [1049. 最后一块石头的重量 II (opens new window)](https://programmercarl.com/1049.最后一块石头的重量II.html)是求 给定背包容量，尽可能装，最多能装多少
 - [494. 目标和 (opens new window)](https://programmercarl.com/0494.目标和.html)是求 给定背包容量，装满背包有多少种方法。
 - [474.一和零 (opens new window)](https://leetcode.cn/problems/ones-and-zeroes/submissions/497905729/是求) 给定背包容量，装满背包最多有多少个物品。
+
+
+
+# ::
+
+“::”是Java 8 引入的新特性之一，常常被称作为方法引用，提供了一种不执行方法的方法。使用“::”可以进一步简化一些使用了[lambda](https://so.csdn.net/so/search?q=lambda&spm=1001.2101.3001.7020)表达式的代码，让代码更加简洁。
