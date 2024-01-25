@@ -1,0 +1,42 @@
+
+
+# 省略号
+
+| 代码 | 效果 | 意义 |
+| :--- | :--- | ---- |
+|\cdots|	⋯ \cdots⋯|	横向|
+|\vdots|	⋮ \vdots⋮|	竖向|
+|\ddots|	⋱ \ddots⋱|	对角线方向|
+|x,y,\ldots,z|	x , y , … , z x,y,\ldots,zx,y,…,z	|跟文本底线对齐|
+
+
+
+反向省略号：
+
+https://blog.csdn.net/m0_37203420/article/details/112250713
+
+采用对象旋转的命令来操作对角线方向的省略号旋转从而实现反斜对角方向的省略号。
+
+先要使用usepackage{rotating}导入旋转包，旋转命令格式\begin{command}{x}，这里的{command}有三个命令选项： sideways, turn, rotate。{x}是用户自己定义的旋转角度。
+
+
+
+```latex
+\documentclass{article}
+
+
+\usepackage{rotating}         %用于旋转对象（旋转包）
+
+\begin{document}
+
+$\ddots$\qquad
+\begin{sideways}$\ddots$\end{sideways}\qquad
+\begin{turn}{90}$\ddots$\end{turn}\qquad\qquad
+\begin{rotate}{90}$\ddots$\end{rotate}
+
+
+
+\end{document}
+
+```
+
