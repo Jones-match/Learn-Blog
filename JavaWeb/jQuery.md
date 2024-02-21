@@ -248,7 +248,7 @@ function() 的() 中有一个this 对象, 里面有当前遍历的dom对象
   ```
       $(":radio").val(["radio2"]);
       $(":checkbox").val(["checkbox1", "checkbox2"]);
-
+  
   ```
 
   - 同时多种类型:

@@ -34,6 +34,10 @@ JavaWeb  的三大组件之一
 
 ## 3. web.xml 中配置servlet 程序的访问地址
 
+配置的url 是加在工程路径的后面
+
+工程路径就是到web 这一级的目录
+
  ![image-20240115120647468](image/Servlet/image-20240115120647468.png)
 
 这个报红是要配置地址
@@ -236,7 +240,7 @@ servletConfig.getServletContext()
 2. 表示servlet 上下文对象
 3. 一个web 工程只有一个ServletContext 对象实例
 4.  ServletContext 是一个域对象
-4.  ServletContext 对象是在web 工程部署时创建， web工程停止的时候销毁 
+4.  ServletContext 对象是**在web 工程部署时创建， web工程停止的时候销毁** 
 
 域对象是一个可以像Map 对象一样存取数据的对象， 只要工程没有被销毁，设置的setAttribute() 就会一直存在，工程中的其他模块文件，都是可以获取到的，自己也可以一直访问
 
@@ -295,7 +299,9 @@ context.getContexPath();
 context.getRealPath("/");	
 ```
 
-/  会被服务器解析为`http://ip:port/工程名/`
+<font color="red">/  会被服务器解析为`http://ip:port/工程名/`, 映射到web 目录</font>
+
+
 
 这个getRealPath("/") 会获取到IDEA中的web 文件目录
 
@@ -315,6 +321,16 @@ context.getRealPath("/");
         - context.getAttribute(name);
 
 ​			
+
+5. 获取文件流
+
+​	servlet.getResourseAsStream(pathString);
+
+
+
+6. 获取文件类型
+
+    servlet.getMimeType()
 
 
 
@@ -401,7 +417,7 @@ HTTP协议：客户端和服务器之间发送数据遵守的规则
 
 ![image-20240120171122341](image/Servlet/image-20240120171122341.png)
 
-### GET 有哪些
+### 哪些情况下是GET 请求
 
 1. form 标签method=get
 2. a标签
@@ -410,6 +426,8 @@ HTTP协议：客户端和服务器之间发送数据遵守的规则
 5. img标签引入图片
 6. iframe标签引入html 页面
 7. 在浏览器的地址栏后，敲回车
+
+
 
 ### POST有哪些
 
@@ -504,9 +522,18 @@ HTTP中使用的数据类型
 | getParameter(参数名)            | 获取请求参数                               |
 | getParameterValues()            | 获取请求参数（多个值的时候使用）           |
 | getMethod()                     | 获取请求的方式（GET，POST）                |
-| setAttribute(key, value)        | 设置域数据                                 |
-| getAttribute(key)               | 获取域数据                                 |
+| setAttribute(key, value)        | 设置request域数据                          |
+| getAttribute(key)               | 获取request域数据                          |
 | getRequestDispatcher()          | 获取请求转发对象                           |
+|                                 |                                            |
+| getSession().setAttribute()     | 设置session 域数据                         |
+| getSession().getAttribute()     | 获取session 域数据                         |
+
+getParameter() 方法需要使用传过来之后才能获取
+
+​	input:hidden 需要放在form 标签中，且要使用input:submit 提交一下
+
+
 
 **URI 和 URL：**
 
@@ -540,7 +567,7 @@ getRemoteHost() 会得到客户在请求时自己的ip 地址
 
 
 
-## 请求的转发
+## 请求转发
 
 服务器收到请求后，从一个资源跳转到另一个资源
 
@@ -562,11 +589,13 @@ Servlet1:
 
 HttpServletRequest 对象也有一个setAttribute() 方法，这个和context 中的setAttribute() 方法一样，设置后都是在域内生效
 
-​	获取下一个资源的地址： getRequestDispatcher(一个路径名，要写的是"/servlet2")  必须要以/ 开头，表示的是完整的工程路径（http://localhost:8080/工程路径）映射到IDEA中该工程下的的web目录
+​	获取下一个资源的地址： getRequestDispatcher(一个路径名，要写的是"/servlet2") [可以写任何一个资源地址]
+
+<font color="red"> 必须要以/ 开头</font>，表示的是完整的工程路径（http://localhost:8080/工程路径）映射到IDEA中该工程下的的**web目录**
 
 ​	转发到下一个资源：requestDispatcher.forward(request, response)
 
-​	
+
 
 Servlet2: 
 
@@ -602,7 +631,7 @@ Servlet2:
 
 修改相对路径的所相对的地址，让他可以变成同一个地址
 
-使用base 标签可以设置一个当前页面中所有相对路径工作时的参照路径，跳转时会根据这个参照路径来进行跳转
+使用base 标签可以设置一个<font color="red">当前页面中所有相对路径工作时的参照路径</font>，跳转时会根据这个参照路径来进行跳转
 
 一般base 标签写在title 下面（在head 标签里面）
 
@@ -613,6 +642,36 @@ Servlet2:
 ​	最后的资源名可以省略（原因是资源并不是目录），但是资源名前面的 / 不能省略（将最后一个识别为目录名）
 
 ​		如果不写那个 / ， 就会认为最后的那个目录是一个资源路径，就会直接将其忽略，以倒数第二个作为目录
+
+​	
+
+<font color="red">**base 标签只会对自己当前这个html 页面有效**</font>
+
+固定处当前页面的相对的那个地址
+
+​	可能会影响原来写的相对路径
+
+​	原来是相对于页面所在的目录而言写出来的，修改之后会改变指向
+
+一般放在title 的下面
+
+一般写到工程路径
+
+```html
+<base href="http://localhost:8080/BookStore2/">
+```
+
+BookStore2 这个工程路径对应的是模块中的web 目录
+
+
+
+base 标签是一个单标签
+
+
+
+
+
+
 
 
 
@@ -673,6 +732,22 @@ response.sendRedirect("/") 把/ 发送给浏览器解析，得到http://ip:port/
 
 
 
+
+
+response.setHeader("Content-Disposition", "attachment;filename=" + 文件名);
+
+Content-Disposition表示收到的数据处理方法
+
+attachment 表示附件， 表示下载使用
+
+filename= 是指定下载的文件名
+
+
+
+
+
+
+
 ## 流
 
 通过流传递给客户端
@@ -705,7 +780,7 @@ writer.write("data")
 
 
 
-**响应的乱码**
+### **响应的乱码**
 
 如果直接在内容里写中文，返回的会是	?????
 
@@ -715,7 +790,7 @@ writer.write("data")
 response.setCharaterEncoding("utf8");
 ```
 
-设置服务器的字符集是utf8
+设置**服务器的字符集**是utf8
 
 设置的只是服务器的字符集，如果与浏览器的字符集不统一，会变成另一种乱码（浏览器默认是GBK）
 
@@ -723,7 +798,7 @@ response.setCharaterEncoding("utf8");
 
 
 
-也可以通过响应头，设置浏览器的字符集
+通过响应头，设置**浏览器**的字符集
 
 ```
 response.setHeader("Content-Type", "text/html; charset=uft8");

@@ -1,3 +1,13 @@
+
+
+# 版本
+
+王振国用的IDEA 是2019.3.1
+
+
+
+
+
 # 页面的自动更新设置
 
 ![1699800075410](image/idea/1699800075410.png)
@@ -22,23 +32,33 @@
 
 Ctrl + R : 替换  
 
+Ctrl + Shift + R 按照不同的目录进行替换
+
+
+
 Alt + Shift + 上(下) : 将代码上(下)移   
 
 Ctrl+Alt+V 自动生成变量名
 
 
 
+Ctrl + p 查看参数
+
+
+
+# 断点
+
+菱形断点， Java Method Breakpoints 
+
+眼睛断点， Java Field Breakpoints 
+
+闪电断点， Exception Breakpoints
+
 
 
 # 其他
 
 
-
-
-
-# 版本
-
-王振国用的IDEA 是2019.3.1
 
 
 
@@ -63,4 +83,6 @@ https://blog.csdn.net/qq1808814025/article/details/109543885
 https://blog.csdn.net/Supreme7/article/details/104965778
 
 在project structure --> project --> project language level 修改为自己使用的java 版本
+
+
 
