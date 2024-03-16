@@ -162,14 +162,33 @@ Stack 栈这个类实现的效率很低
 
 
 
+队列： 尾入头出
+
+栈：头入头出
+
+**都是头出**
+
+
+
 而且这个类还可以模拟链表， 它有
 
 |模拟的数据结构|方法|
 |-----|-----|
 ||isEmpty, size|
 |栈|pop, push, peek|
+||push = addFirst|
+|| peek = getFirst                                              |
 |队列|add(no capacity restriction), remove(exception), element(exception)<br />offer(capacity restriction), poll(null), peek(null)|
+||add = addLast|
+||remove = removeFirst|
+|||
 |双向链表|addFirst, addLast, offerFirst, offerLast<br />removeFirst, removeLast, pollFirst, pollLast<br />getFirst, getLast, peekFirst, peekLast|
+
+**双向链表的头** 是 栈头 和 队头
+
+​				栈头 = 栈尾
+
+
 
 
 
@@ -242,6 +261,12 @@ map.compueIfAbsent(key, function);
 
 ​	有就取出， 没有就添加（将function 中的值赋给这个key的value）
 
+例：
+
+```java
+int shirtPrice = prices.computeIfAbsent("Shirt", key -> 280);
+```
+
 
 
 # 前缀和
@@ -263,3 +288,71 @@ $$
 # Collections
 
 Collections.reverse(list) ----  可以反转列表元素
+
+
+
+
+
+# 优先队列
+
+PriorityQueue 默认是小根堆
+
+大根堆的表示方式：
+
+```java
+// 1
+PriorityQueue<Integer> pq = new PriorityQueue<>((a, b) -> b - a);
+
+// 2
+PriorityQueue<Integer> pq = new PriorityQueue<>((a, b) -> Integer.compare(b, a));
+```
+
+
+
+如果是Long 类型， 使用方法1 会出现类型错误
+
+这个时候要用方法2
+
+
+
+
+
+# Arrays.setAll
+
+默认调用函数是：
+
+![image-20240229091549231](image/leetcode-daily/image-20240229091549231.png)
+
+依次取出array 数组中的每一个下标，在每个位置赋上他的下标值
+
+将下标i 作为一个参数传入applyAsInt进行运算中，将数组array[i] 的值更新为applyAsInt() 方法计算后的结果
+
+<img src="image/leetcode-daily/image-20240229094122112.png" alt="image-20240229094122112" style="zoom: 67%;" />
+
+如果使用lambda 表达式，e 是重写applyAsInt()时的operand 参数，也就是setAll() 中的下标i
+
+![image-20240229094244381](image/leetcode-daily/image-20240229094244381.png)
+
+
+
+## 和Arrays.fill()对比
+
+Arrays.setAll() 用法更灵活
+
+fill 只能全部填充为一个值，而setAll可以根据不同的下标来进行设置
+
+fill 中是使用的一个对象填入的，修改其中一个，会发生别名现象，所有的都会发生改变
+
+
+
+setAll 可以用来填充Long.MAX_VALUE, 可以支持int, long, double, T 等类型的数据填充
+
+<img src="image/leetcode-daily/image-20240305091706197.png" alt="image-20240305091706197" style="zoom: 80%;" />
+
+
+
+
+
+# 换根DP
+
+https://leetcode.cn/problems/sum-of-distances-in-tree/solutions/

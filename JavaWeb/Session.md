@@ -4,7 +4,7 @@
 
 3。 每个客户端都有自己的Session会话
 
-​	Session中经常用来保存用户登录的信息
+​	**Session中经常用来保存用户登录的信息**
 
 ​	**Cookie是保存在客户端，而Session是保存在服务器**
 
@@ -26,6 +26,12 @@ isNew() 判断是不是新创建的
 每个会话都有一个id号，id是唯一的
 
 getId()得到Session的会话id值
+
+
+
+# 销毁
+
+request.getSession().invalidate();
 
 
 

@@ -513,21 +513,28 @@ HTTP中使用的数据类型
 
 ## 常用方法
 
-| 方法名                          | 作用                                       |
-| ------------------------------- | ------------------------------------------ |
-| getRequestURI()                 | 获取请求的资源路径                         |
-| getRequestURL()                 | 获取请求的统一资源定位符（资源的绝对路径） |
-| getRemoteHost()                 | 获取客户端的IP地址                         |
-| getHeader(想获取的请求头的名字) | 获取请求头（*字符串不区分大小写*）         |
-| getParameter(参数名)            | 获取请求参数                               |
-| getParameterValues()            | 获取请求参数（多个值的时候使用）           |
-| getMethod()                     | 获取请求的方式（GET，POST）                |
-| setAttribute(key, value)        | 设置request域数据                          |
-| getAttribute(key)               | 获取request域数据                          |
-| getRequestDispatcher()          | 获取请求转发对象                           |
-|                                 |                                            |
-| getSession().setAttribute()     | 设置session 域数据                         |
-| getSession().getAttribute()     | 获取session 域数据                         |
+| 方法名                          | 作用                                                         |
+| ------------------------------- | ------------------------------------------------------------ |
+| getRequestURI()                 | 获取请求的资源路径                                           |
+| getRequestURL()                 | 获取请求的统一资源定位符（资源的绝对路径）                   |
+| getHeader(想获取的请求头的名字) | 获取请求头（*字符串不区分大小写*）                           |
+| getParameter(参数名)            | 获取请求参数                                                 |
+| getParameterValues()            | 获取请求参数（多个值的时候使用）                             |
+| getMethod()                     | 获取请求的方式（GET，POST）                                  |
+| setAttribute(key, value)        | 设置request域数据                                            |
+| getAttribute(key)               | 获取request域数据                                            |
+| removeAttribute(key)            | 删除数据                                                     |
+|                                 |                                                              |
+| getRequestDispatcher()          | 获取请求转发对象                                             |
+| getContextPath()                | 工程路径 "/工程路径"   后面不带/                             |
+| getScheme()                     | 获取HTTP 或 HTTPS 协议                                       |
+| getServerName()                 | 获取地址栏中的ip部分                                         |
+| getRemoteHost()                 | 获取客户端的IP地址                                           |
+|                                 | 如果是localhost:8080，getRemoteHost()会得到127，而getServerName()会得到localhost |
+|                                 |                                                              |
+| getSession().setAttribute()     | 设置session 域数据                                           |
+| getSession().getAttribute()     | 获取session 域数据                                           |
+| getSession().removeAttribute()  | 删除session 域中的数据                                       |
 
 getParameter() 方法需要使用传过来之后才能获取
 
@@ -573,7 +580,7 @@ getRemoteHost() 会得到客户在请求时自己的ip 地址
 
  
 
-在Tomcat 服务器中，需要多个资源**共同完成**一个功能
+在Tomcat 服务器中，需要多个资源**共同完成一个功能**
 
 ​	Servlet1 程序
 
@@ -827,7 +834,7 @@ response.getWriter(); //必须是这个顺序
 
 ## 请求重定向
 
-客户端给服务器发请求，服务器告诉客户端另一个新地址访问（因为之前的地址可能已经被废弃）
+客户端给服务器发请求，服务器告诉客户端另一个新地址访问（因为之前的地址可能已经被**废弃**）
 
 
 

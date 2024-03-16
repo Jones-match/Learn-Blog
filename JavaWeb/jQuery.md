@@ -8,7 +8,10 @@ jQuery中尽量使用单引号
 # 简介
 
 js和查询, 辅助js开发的类库
-引入jquery文件
+引入jquery文件 -- [html页面中jquery导入方法](./importjquery.md )
+
+
+
 alert($); 来测试是否引入成功
 
 $ 是一个函数

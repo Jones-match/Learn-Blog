@@ -19,6 +19,8 @@ js的三个特点:
 
 # js 和html 代码的结合方式
 
+
+
 ## 1. 只要在head/body 标签, 使用script标签来写js代码
 
 ```
@@ -663,7 +665,7 @@ value的值是随着输入的不同而得到不同的值
     用户名:<input type="text" id="username" value="msg"/>
     <button onclick="onclickFun()">校验</button>
 </body>
-```  
+```
 obj.innerHTML 表示起始标签和结束标签之间的内容  
 innerHTML 可读可写  
 可以是文字, 也可以是图片  
@@ -731,20 +733,30 @@ divObj.appendChild(textNodeObj);
 属性:  
 - childNodes  所有的子节点 
     - 会包括标签之间的空白字符(空白边当作是字符串对象)
+    
 - firstChild 当前节点的第一个子节点 
+
 - lastChild  当前节点的最后一个子节点 
+
 - parentNode  当前节点的**父节点** 
+
 - nextSibling  当前节点的下一个兄弟节点 
+
 - prevoiusSibling  当前节点的上一个兄弟节点
+
 - className  获取/设置标签的class属性值
+
 - innnerHTML  标签之间的内容
+
 - innerText  标签之间的文本
     innerHTML指的是从对象的起始位置到终止位置的全部内容,**包括Html标签**。
     innerText   指的是从起始位置到终止位置的内容,但它**去除Html标签**。
-    分别显示 `<p id="p1">hello world </p> 和 hello world`  
-
     内容和文本的差别:  
-     
+
+    分别显示 `<p id="p1">hello world </p> 和 hello world`  
+    
+    
+    
 
 window.onload 是在整个页面加载完成之后才会执行   
 如果把onclick的函数也放在onload中, 代表在页面加载完成之前, 是不能点击按钮的    

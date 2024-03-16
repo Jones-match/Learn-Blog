@@ -381,7 +381,7 @@ write输出int 数据，会直接将int 值强转成char 放入缓冲区中
 
 
 
-**jsp 页面中，可以统一使用out.print()进行输出**
+jsp 页面中，可以<font color="darkviolet" size=5>统一使用out.print()进行输出</font>
 
 
 

@@ -44,6 +44,17 @@ Ctrl+Alt+V 自动生成变量名
 
 Ctrl + p 查看参数
 
+Ctrl + Alt + B`或者`ctrl+Alt+鼠标左键  查看实现类
+
+ctrl + h 查看类或接口的继承关系
+
+Ctrl + Alt + H 可以找到哪里调用这个方法了。
+
+
+
+
+
+
 
 
 # 断点
