@@ -148,9 +148,17 @@ context.getBean("id值", User.class);
 
 1：IOC 容器中指定类型的bean有且只能有一个（不能在xml 中给一个class 配置多个不同的id 的bean 标签）
 
-2：对于一个接口，根据接口.class 获取，如果只有一个实现类，可以获取bean （使用instanceOf判断是不是一个接口的实现）
+2：对于一个接口，根据接口.class 获取，如果只有一个实现类，可以获取bean （使用instanceof判断是不是一个接口的实现）
 
 ​			如果有多个实现类，无法获取bean
+
+a instanceof b 判断a 是不是b 类的一个实例
+
+
+
+
+
+
 
 #### 依赖注入
 
@@ -488,13 +496,621 @@ session
 
 4、对bean 对象进行初始化（调用指定的初始化方法）
 
+​	bean 标签中有属性init-method 
+
 5、后置处理器
 
 6、创建完成，可以使用
 
 7、销毁（配置销毁的方法）
 
+​	bean 标签中的属性destroy-method
+
+​	`context.close()` 不能用接口ApplicationContext，用实现类
+
 8、IoC 容器关闭
+
+
+
+后置处理器:
+
+类实现BeanPostProcessor 接口
+
+接口里有两个方法
+
+postProcessAfterInitialization， postProcessBeforeInitialization
+
+
+
+xml 文件中配置后置处理器
+
+​	把这个实现了接口的类放入到xml 中，和其他的类一样的加入方法
+
+​	后置处理器是针对所有的bean都生效
+
+
+
+#### FactoryBean
+
+spring 中的一种机制
+
+类MyTest实现接口FactoryBean<泛型>
+
+接口有两个方法
+
+
+
+配置这个类后，会返回的对象不是MyTest 的对象，而是由接口中的方法getObject() 返回的对象
+
+
+
+常用于整合第三方框架 
+
+
+
+#### 基于xml 的自动装配
+
+自动装配：注入过程自动实现
+
+简化注入
+
+
+
+bean 标签中有属性autowire="" 可以根据类型，也可以根据名字注入
+
+byType, byName
+
+ 
+
+根据类型进行自动装配：
+
+在Controller 类里有属性UserService，在注入的时候，会根据这个类型去xml配置文件中去到对应的对象进行注入
+
+如果没有可以匹配的bean来给属性赋值， 这个属性的值就会置为null
+
+如果有多个可以匹配的bean，就会抛出异常
+
+​	因此要保证可以注入的bean对象唯一
+
+ 
+
+
+
+根据名称进行自动装配：
+
+要保证在xml 配置文件中，对应的bean对象的id与类中的属性名一致
+
+
+
+
+
+### 基于注解的bean管理
+
+注解：代码中的特殊标记
+
+在运行时被处理，不改变
+
+格式： @注解名称(属性1 = 属性值...)
+
+
+
+类，属性，方法上都可以加注解
+
+
+
+可以简化xml 配置
+
+
+
+#### 创建bean对象，自动装配的步骤：
+
+##### 1、引入依赖
+
+
+
+##### 2、开启组件扫描
+
+在xml 配置文件中，开启注解管理bean
+
+
+
+先加入命名空间context
+
+
+
+基本扫描：
+
+```xml
+<context:component-scan base-package="包名"></context:component-scan>
+```
+
+base-package 能扫描包以及子包下的所有的类
+
+在类上使用了注解之后就可以进行相应的功能
+
+
+
+可以指定排除规则：（exclude-filter)
+
+```xml
+<context:component-scan base-package="com.atguigu.spring6">
+    <!-- context:exclude-filter标签：指定排除规则 -->
+    <!-- 
+ 		type：设置排除或包含的依据
+		type="annotation"，根据注解排除，expression中设置要排除的注解的全类名
+		type="assignable"，根据类型排除，expression中设置要排除的类型的全类名
+	-->
+    <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+        <!--<context:exclude-filter type="assignable" expression="com.atguigu.spring6.controller.UserController"/>-->
+</context:component-scan>
+```
+
+
+
+只扫描特定组件：（use-default-filters)
+
+```xml
+<context:component-scan base-package="com.atguigu" use-default-filters="false">
+    <!-- context:include-filter标签：指定在原有扫描规则的基础上追加的规则 -->
+    <!-- use-default-filters属性：取值false表示关闭默认扫描规则 -->
+    <!-- 此时必须设置use-default-filters="false"，因为默认规则即扫描指定包下所有类 -->
+    <!-- 
+ 		type：设置排除或包含的依据
+		type="annotation"，根据注解排除，expression中设置要排除的注解的全类名
+		type="assignable"，根据类型排除，expression中设置要排除的类型的全类名
+	-->
+    <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+	<!--<context:include-filter type="assignable" expression="com.atguigu.spring6.controller.UserController"/>-->
+</context:component-scan>
+```
+
+
+
+##### 3、使用注解**定义bean**
+
+功能都一样, 只是在习惯上在使用的地方有些区分
+
+| 注解名      | 用法       |
+| ----------- | ---------- |
+| @Component  | 普通Bean   |
+| @Repository | Dao        |
+| @Service    | Service    |
+| @Controller | Controller |
+
+
+
+```java
+@Component(value="user") 
+等价于id="user" class="当前的路径"
+```
+
+不写括号内的value="user"， 默认值就会是当前的类名的首字母小写
+
+
+
+##### 4、依赖（属性）注入
+
+###### 1） @Autowired 
+
+该注解是Spring 框架中自带的
+
+
+
+自动使用类型进行匹配 byType
+
+- 属性注入
+
+开启组件扫描
+
+bean对象创建
+
+定义相关的属性，在属性上添加注解
+
+
+
+Autowired 放在属性上面，会根据类型找到对应的对象，完成注入 
+
+
+
+- set 注入
+
+进行set方法注入
+
+定义属性后，加上对应的set 方法
+
+然后在set方法的上面加上Autowired 注解
+
+
+
+- 构造器注入
+
+定义属性后，写上构造器方法
+
+然后在构造器上写Autowired注解
+
+
+
+- 形参注入
+
+在构造器的参数中，写上Autowired 注解
+
+```java 
+private String name;
+
+public setName(@Autowired String name) {
+    this.name = name;
+}
+```
+
+
+
+- 只有一个构造函数，注解可省略
+
+只有一个构造器（且这个构造器上有需要注入的参数），@Autowired 注解可以省略
+
+不管是哪里的注解方法，都可以不用
+
+
+
+- @Autowired 注解和@Qualifier 注解联合
+
+用两个注解可以
+
+Autowired 默认根据类型进行匹配
+
+Qualifier 默认根据名称进行匹配
+
+
+
+如果同一个接口有两个实现类，根据接口类型注入就会报错
+
+这个时候可以通过添加一项名称匹配来重新锁定具体的类
+
+@Qualifier(value="想要注入的类的名字，首字母改成小写")
+
+
+
+###### 2）@Resource 注入
+
+不是Spring框架中的
+
+而是JDK 中的一部分
+
+标准注解，通用性更好
+
+默认是根据名称来进行匹配的
+
+​	未指定name，就会使用属性名作为name
+
+如果名称找不到，再根据类型进行装配(类型是定义时的类型)
+
+Resource 能用在属性 和 方法上
+
+JDK 8不需要额外引入包，高于JDK11 或 低于JDK 8需要引入：
+
+```xml
+<dependency>
+    <groupId>jakarta.annotation</groupId>
+    <artifactId>jakarta.annotation-api</artifactId>
+    <version>2.1.1</version>
+</dependency>
+```
+
+
+
+注解里面的value 属性，可以不写value=
+
+在类上面的注解中，写上value= "xxxx", 这个xxxx就是这个类的名字（name）
+
+
+
+
+
+#### 全注解开发
+
+省掉在xml 设置开启组件扫描
+
+
+
+使用配置类代替配置文件
+
+
+
+在类上加上注解@Configuration
+
+```java
+@Configuration
+@ComponentScan("写上开启组件扫描的包")  效果等价于在xml 中开启组件扫描
+public class SpringConfig {
+    
+}
+```
+
+
+
+加载配置类
+
+```java
+ApplicationContext context = new AnnotationConfigApplicationContext(配置类.class);
+```
+
+​	不是原来根据类路径来加载xml文件了
+
+
+
+
+
+# 手写IoC
+
+模拟IoC 的实现过程
+
+
+
+反射 +　注解
+
+
+
+
+
+## 反射
+
+首先要先获取类的Class对象（字节码文件）
+
+通过字节码文件，可以操纵属性、方法等
+
+
+
+获取Class对象的方式：
+
+１、类名.class
+
+2、对象.getClass()
+
+3、Class.forName("类的全路径")
+
+
+
+实例化：
+
+clazz.getDeclaredConstructor().newInstance();
+
+
+
+
+
+获取构造方法：
+
+1、所有的构造器
+
+clazz.getConstructors() -- 获取public 方法
+
+clazz.getDeclaredContructors()  -- 可以获取private 方法
+
+
+
+2、有参构造
+
+clazz.getContructor(参数类型.class)
+
+clazz.getDeclaredContructor(参数类型.class)
+
+​	c.setAccessible(true)；
+
+
+
+得到构造之后使用newInstance(需要的参数) 进行实例化
+
+
+
+
+
+
+
+获取属性：
+
+clazz.getFields(); -- public 
+
+clazz.getDeclaredFields(); -- private
+
+
+
+field.getName() -- 属性名
+
+field.setAccessible(true);
+
+field.set(对象，属性值)
+
+
+
+获取方法：
+
+clazz.getMethods()  --- public
+
+clazz.getDeclaredMethods() ---- private
+
+method.invoke(对象，方法的参数列表中各个参数的值)
+
+clazz.getDeclaredMethod("方法名", 方法中参数列表中各个参数.class)
+
+
+
+
+
+```
+setAccessible(true)
+把获取到的方法，属性设置为可访问，而不是对对象进行设置访问权限
+```
+
+
+
+
+
+
+
+
+
+## 实现步骤
+
+1、创建新的子模块
+
+2、创建测试类
+
+3、创建两个注解
+
+​	自己写注解
+
+​	@Bean 	<===>	@Service
+
+​	@Di 	<===>	@Autowired
+
+4、创建bean容器接口ApplicationContext
+
+定义方法，返回对象
+
+5、实现bean 容器中的接口
+
+​	1。返回对象
+
+​	2。根据包规则加载bean
+
+​	扫描特定的包，看类上面是否有@Bean 注解，如果有就把这个类通过反射实例化
+
+
+
+### 1、创建子模块
+
+
+
+
+
+### 2、创建测试类
+
+
+
+
+
+
+
+### 3、创建注解
+
+设置注解的生效范围：使用**元注解**
+
+@Target(ElementType.TYPE)  使用的地方 --- 在类上使用
+
+​	ElementType.FIELD	属性上
+
+@Retention(RententionPolicy.RUNTIME)  生效时间 -- 运行时
+
+​	
+
+
+
+
+
+### 4、创建容器接口
+
+
+
+
+
+
+
+### 5、实现bean容器中的接口
+
+map 中放bean对象？？
+
+
+
+定义包的扫描规则： 
+
+有@Bean 这个注解，就把这个类通过反射实例化
+
+
+
+将. 替换成/ 
+
+```java
+stringPath.replaceAll("\\.", "/");
+```
+
+
+
+获取包的绝对路径
+
+```java
+Thread.currentThread().getContextClassLoader().getResources(stringPath);
+
+
+while (urls.hasMoreElements()) {
+    urls.nextElement();
+    filePath = URLDecoder.decode(url.getFile(), "utf-8");
+}
+```
+
+
+
+
+
+获取文件夹中的所有文件
+
+```java
+file[] files = file.listFiles();
+```
+
+文件夹判空
+
+```java
+files.
+```
+
+
+
+获取文件类型对象的绝对路径
+
+```java
+file.getAbsolutePath()
+```
+
+判断是不是.class文件
+
+```java
+string.contains(".class")
+```
+
+
+
+判断是不是有注解
+
+```java
+Class<?> clazz = Class.forName(fullName);
+
+clazz.isInterface() //判断是不是接口
+ 
+clazz.getAnnotation(Bean.class);  //判断是不是有Bean注解
+
+//实例化
+clazz.getConstructor().newInstance();
+
+//把实例化的对象放到map 中
+//如果有接口，就把接口作为key
+clazz.getIntefaces().length > 0 ;
+clazz.getInterfaces()[0], instance;
+
+//没有接口，把类作为key
+clazz, instance;
+
+
+```
+
+
+
+
+
+
+
+
+
+
 
 
 

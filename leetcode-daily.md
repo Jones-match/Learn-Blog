@@ -295,7 +295,7 @@ Collections.reverse(list) ----  可以反转列表元素
 
 # 优先队列
 
-PriorityQueue 默认是小根堆
+PriorityQueue 默认是**小根堆**
 
 大根堆的表示方式：
 
@@ -356,3 +356,82 @@ setAll 可以用来填充Long.MAX_VALUE, 可以支持int, long, double, T 等类
 # 换根DP
 
 https://leetcode.cn/problems/sum-of-distances-in-tree/solutions/
+
+
+
+
+
+# 初始化List 的方法
+
+1、 new 后使用add
+
+2、 {{}} 只能初始化非变量
+
+​	外层的 {} 定义了一个 LinkedList 的匿名内部类。内层的 {} 的定义了一个实例初始化代码块。 
+
+​	这个代码块在初始化内部类时执行。
+
+​	
+
+3、 Arrays.asList
+
+​	不支持增删元素。
+
+​	只能用于初始化 List 类型了。
+
+​	Returns a fixed-size list backed by the specified array.
+​	
+
+​	在只用于返回结果时很方便
+
+
+
+4、 stream
+
+​	`Stream.of("a", "b", "c").collect(Collectors.toList());`
+
+5、 Lists.newArrayList
+
+
+
+# 取模
+
+可以随意地对代码中的加法和乘法的结果取模
+
+
+
+分别取模，运算（加/乘）后再整体取模
+
+```
+(a + b) mod c = ((a mod c) + (b mod c)) mod c
+(a * b) mod c = ((a mod c) * (b mod c)) mod c
+```
+
+
+
+# List.remove()
+
+移除下标 list.remove(idx)
+
+移除整数元素 list.remove((Integer)num)
+
+
+
+
+
+# StringBuilder方法
+
+reverse
+
+append
+
+deleteCharAt
+
+delete(start, end)
+
+replace(start, end, str)
+
+insert(offset, content) 		offset 是添加的内容要放的第一个位置，原来的内容会跑到添加的内容整体的后面
+
+
+
