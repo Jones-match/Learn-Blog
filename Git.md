@@ -437,7 +437,7 @@ $ git remote add origin git@github.com:Jones-match/Learn-Blog.git
 提交到远程库中：
 
 ```
-$ git push -u origin master
+$ git push -u origin  
 ```
 
 将当前分支master 提交到了远程库中
