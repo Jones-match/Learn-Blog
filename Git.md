@@ -58,6 +58,12 @@ git config --global color.ui auto
 
 ## 配置
 
+
+
+<img src="image/Git/image-20240413155802844.png" alt="image-20240413155802844" style="zoom: 50%;" />
+
+
+
 %homedrive%指操作系统所在盘
 %homepath%指\Documents and Settings(user)，这里的user指你的系统用户名
 
@@ -484,9 +490,21 @@ Warning: Permanently added 'github.com' (RSA) to the list of known hosts.
 
 ## 克隆远程库
 
+1. 克隆之前，首先要在自己本地创建一个仓库
+
+```bash
+git init
 ```
+
+
+
+2. 再执行克隆命令
+
+```bash
 $ git clone git@github.com:自己的GitHub 用户名/远程库名.git
 ```
+
+
 
 
 
@@ -637,11 +655,44 @@ git branch -d 分支名
 
 
 
+# 在一台电脑上配置多个ssh key 
+
+> [如何在同一电脑上生成配置多个ssh key 公钥 私钥（保姆级教程）_生成多个ssh key-CSDN博客](https://blog.csdn.net/qq_55558061/article/details/124117445)
+
+1. 生成一个ssh key
+
+```bash
+ssh-keygen -t rsa -C "注册时使用的邮箱"
+```
+
+2. 
+
+![在这里插入图片描述](image/Git/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAcmVuZXdf5p2R6ZW_,size_18,color_FFFFFF,t_70,g_se,x_16#pic_center.jpeg)
+
+出现下一行确定信息时，在： 后面输入自定义的rsa文件名
 
 
 
+3. 将在本地生成的ssh key 添加到自己的仓库
+4. 在.ssh 目录下有一个config 文件（如果没有config 文件就使用命令touch config 进行生成）
 
+在config文件中添加如下的配置信息
 
+```bash
+# github
+Host github.com
+HostName github.com
+PreferredAuthentications publickey
+IdentityFile ~/.ssh/github_id_rsa
+```
+
+Host 是自定义的别名，影响git相关命令
+
+HostName 是服务器地址或域名
+
+PreferredAuthentications 权限验证， 一般使用publickey 
+
+IdentityFile 设置使用的rsa文件地址
 
 
 
@@ -690,6 +741,8 @@ error: remote origin already exists.表示远程仓库已存在。
 
 ## **src refspec master does not match any**
 
+<font color="red">error: failed to push some refs to </font> 'github.com:Jones-match/Learn-Blog.git'
+
 ```
 $ git push -u origin master
 
@@ -708,9 +761,22 @@ error: failed to push some refs to 'github.com:Jones-match/Learn-Blog.git'
 
 
 
-### 解决方法
+**解决方法：**
 
 使用 git branch -al 查看都有哪些分支
 
 选一个除了master之外的分支进行上传
+
+
+
+
+
+## git提交或克隆报错fatal: unable to access ‘https://github.com/tata20191003/autowrite.git/‘: Failed to connec
+
+```bash
+//取消http代理
+git config --global --unset http.proxy
+//取消https代理 
+git config --global --unset https.proxy
+```
 
