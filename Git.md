@@ -147,11 +147,11 @@ cat ~/.ssh/id_rsa.pub
 ssh -T git@github.com
 ```
 
-### 报错
+### 报错1
 
 ssh: connect to host github.com port 22: Connection timed out
 
-### 解决方法
+#### 解决方法
 
 ```
 cd ~/.ssh
@@ -168,6 +168,22 @@ Port 443
 ```
 
 :wq 保存后即可
+
+### 报错2
+
+The authenticity of host 'github.com (20.205.243.166)' can't be established.
+...
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added 'github.com' (ED25519) to the list of known hosts.
+git@github.com: Permission denied (publickey).
+
+
+
+#### 解决方法
+
+在.ssh 目录中还没有config 文件
+
+
 
 
 
