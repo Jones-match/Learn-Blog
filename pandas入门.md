@@ -162,22 +162,140 @@ dataFrame.rename(mapper=None, index=None, columns=None, axis=None, copy=True, in
 - mapper, index, columns ：可以传递以重命名索引或列的**词典**
 
   - {'oldname':'newname'}
-
 - axis： 可以是'index' 或 'columns'，确定重命名索引还是重命名列
 
   - 当提供columns 参数时，默认是重命名列
-
 - copy
 
   - True： 创建一个新的dataFrame
   - False：修改原来的
-
 - level：有多级索引的dataFrame，重命名标签的级别
-
 - errors
 
   - raise: 重命名不存在的项，会抛错
   - ignore: 失败时会忽略
 
-  
+
+
+
+# 改数据类型
+
+dataFrame.astype(dtype, copy=True, errors='raise')
+
+- dtype
+  - **数据类型**
+  - 列名 -> 数据类型的**字典**
+- copy
+  - 总是返回新分配的对象
+  - 即使设置为False，也只有在旧对象无法强转为所需的类型时才会创建新的对象
+  - 无效数据会引起异常
+
+
+
+
+
+可以将对象强转为任何dtype
+
+不会就地修改原始的dataFrame -- 会返回一个新的修改后的dataFrame 对象 
+
+
+
+
+
+# 填充缺失值
+
+dataFrame.fillna()
+
+按指定的方法填充NA
+
+- value
+  - 可以是标量，字典，Series 或DataFrame
+- method  ？？？
+  - 填充重新索引Series 中的空洞的方法
+  - 默认是None
+- axis
+  - 0 行
+  - 1 列
+- inplace 
+
+
+
+# 连结
+
+将两个dataFrame 连成一个dataFrame
+
+
+
+pd.concat()
+
+- axis
+  - 0 按行连接  ---  更宽  -- 水平
+  - 1 按列连接  ---  更高  -- 垂直
+- objs
+  - 要连接的Series 或 DataFrame对象 
+
+
+
+例：
+
+pd.concat([df1, df2], axis=1)
+
+
+
+
+
+# 透视
+
+处理数据
+
+将长格式表转为宽格式表
+
+dataFrame.pivot()
+
+- index 
+  - 新dataFrame 中的行
+- columns
+  - 新dataFrame 中的列
+- values
+  - 指定重塑表格时使用的值  ？？
+  - 新的表格中，每个单元格中的值使用的是原来的哪个列的值
+
+
+
+# 融合
+
+宽格式转为长格式
+
+dataFrame.melt()
+
+返回的是一个新的DataFrame对象， 需要一个对象来接收这个新对象 
+
+-  id_vars
+  - 指定保持不变的列
+- value_vars
+  - 指定融合的列
+  - 想要整成行的列
+    - quarter1, quarter2, quarter3...
+- var_name
+  - 存储来自value_vars的标头名称的新列的名称（<font color='red'>新列名</font>）
+    - quarter
+- value_name
+  - 存储value_vars 中的值的新列的名称（<font color='red'>新列名</font>）
+    - 每个季度的销售额
+
+
+
+dataFrame.melt(id_vars='products', value_vars=["quarter_1", "quarter_2", "quarter_3", "quarter_4"], var_name="quarter", value_name='sales')
+
+
+
+
+
+# 方法链
+
+在dataFrame 上执行操作，不需要将每个操作拆分成单独的行或创建多个临时变量
+
+
+
+
 
