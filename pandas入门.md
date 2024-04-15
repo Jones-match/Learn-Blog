@@ -297,5 +297,28 @@ dataFrame.melt(id_vars='products', value_vars=["quarter_1", "quarter_2", "quarte
 
 
 
+animals[animals['weight'] > 100]
+
+- animals['weight'] > 100 
+  - 将大于100的位置设为True
+- animals[animals['weight'] > 100] 
+  - 取出为True的行
+
+
+
+dataFrame.sort_values(by="列名", ascending=False)
+
+- ascending 
+  - 是否为升序
+- sort_values
+  - 根据列值进行排序
+
+
+
+dataFrame[['列名']]
+
+- 只取出列名所指的列
+- 双括号保证取出的结构类型是DataFrame而不是Series
+
 
 
