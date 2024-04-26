@@ -177,6 +177,10 @@ target 是设置哪个目标进行跳转
 
 ### 6. img标签
 
+靠左对齐
+
+`<img style="float:left"/>`
+
 可以在html 页面上显示图片
 
 ```

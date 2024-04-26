@@ -4,3 +4,8 @@
 
 
 
+
+
+# 配C环境 
+
+[VSCode配置C/C++环境 - 知乎 (zhihu.com)](https://zhuanlan.zhihu.com/p/87864677)
