@@ -103,7 +103,7 @@ IOC最基本的实现，是Spring内部使用的，开发者并不能使用
 
 ### 基于XML 管理bean
 
-父工程中写的xml 配置文件，子模块中的xml 中就不用再写了
+**父工程中写的xml 配置文件，子模块中的xml 中就不用再写了**
 
 
 
@@ -690,7 +690,7 @@ base-package 能扫描包以及子包下的所有的类
 
 ##### 4、依赖（属性）注入
 
-###### 1） @Autowired 
+###### 1）@Autowired 
 
 该注解是Spring 框架中自带的
 
@@ -770,7 +770,7 @@ Qualifier 默认根据名称进行匹配
 
 
 
-###### 2）@Resource 注入
+###### 2）@Resource 
 
 不是Spring框架中的
 
@@ -844,7 +844,7 @@ ApplicationContext context = new AnnotationConfigApplicationContext(配置类.cl
 
 模拟IoC 的实现过程
 
-
+![image-20240507203130349](image/IoC/image-20240507203130349.png)
 
 反射 +　注解
 
@@ -959,9 +959,9 @@ setAccessible(true)
 
 ​	自己写注解
 
-​	@Bean 	<===>	@Service
+​	@Bean 	<===>	@Service     创建对象
 
-​	@Di 	<===>	@Autowired
+​	@Di 	<===>	@Autowired	用于注入属性
 
 4、创建bean容器接口ApplicationContext
 
@@ -974,6 +974,8 @@ setAccessible(true)
 ​	2。根据包规则加载bean
 
 ​	扫描特定的包，看类上面是否有@Bean 注解，如果有就把这个类通过反射实例化
+
+![image-20240507205835391](image/IoC/image-20240507205835391.png)
 
 
 
@@ -993,13 +995,15 @@ setAccessible(true)
 
 ### 3、创建注解
 
+#### 元注解
+
 设置注解的生效范围：使用**元注解**
 
 @Target(ElementType.TYPE)  使用的地方 --- 在类上使用
 
 ​	ElementType.FIELD	属性上
 
-@Retention(RententionPolicy.RUNTIME)  生效时间 -- 运行时
+@Retention(RetentionPolicy.RUNTIME)  生效时间 -- 运行时
 
 ​	
 
@@ -1008,6 +1012,8 @@ setAccessible(true)
 
 
 ### 4、创建容器接口
+
+BeanFactory 使用的是工厂
 
 
 
@@ -1019,11 +1025,23 @@ setAccessible(true)
 
 map 中放bean对象？？
 
+Class-Ojbect 的键值对
 
 
-定义包的扫描规则： 
+
+
+
+定义包的**扫描规则**： 
+
+当前包以及子包中，如果哪个类上面有@Bean 自己定义的注解，就把这个类通过反射进行实例化
 
 有@Bean 这个注解，就把这个类通过反射实例化
+
+
+
+创建有参构造器，传递包路径
+
+
 
 
 

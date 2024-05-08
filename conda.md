@@ -22,7 +22,7 @@ conda create -n myenv_name python=x.x
 
 source activate myenv_name
 
-
+![image-20240508181130054](image/conda/image-20240508181130054.png)
 
 # 退出环境
 
@@ -73,3 +73,20 @@ channels:
   - defaults
 ```
 
+
+
+
+
+
+
+# 安装环境
+
+在切换到自己的conda环境后，使用以下命令可以直接根据文本中的信息安装指定版本的包
+
+pip install -r requirements.txt
+
+
+
+txt中写的格式是：
+
+numpy==1.24.4
