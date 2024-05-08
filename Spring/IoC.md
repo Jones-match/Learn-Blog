@@ -959,9 +959,9 @@ setAccessible(true)
 
 ​	自己写注解
 
-​	@Bean 	<===>	@Service     创建对象
+​	**@Bean 	<===>	@Service     创建对象**
 
-​	@Di 	<===>	@Autowired	用于注入属性
+​	**@Di 	<===>	@Autowired	用于注入属性**
 
 4、创建bean容器接口ApplicationContext
 
@@ -1029,6 +1029,12 @@ Class-Ojbect 的键值对
 
 
 
+##### @Bean
+
+实例化对象
+
+
+
 
 
 定义包的**扫描规则**： 
@@ -1040,6 +1046,12 @@ Class-Ojbect 的键值对
 
 
 创建有参构造器，传递包路径
+
+
+
+找到文件夹的绝对路径，不是src 的绝对路径，而是编译之后的绝对路径（**待会截图**）
+
+<img src="image/IoC/image-20240508192119945.png" alt="image-20240508192119945" style="zoom: 50%;" />
 
 
 
@@ -1055,6 +1067,8 @@ stringPath.replaceAll("\\.", "/");
 
 获取包的绝对路径
 
+根据Thread线程中的一个类加载器getContextClassLoader来获取绝对路径 
+
 ```java
 Thread.currentThread().getContextClassLoader().getResources(stringPath);
 
@@ -1064,6 +1078,10 @@ while (urls.hasMoreElements()) {
     filePath = URLDecoder.decode(url.getFile(), "utf-8");
 }
 ```
+
+![image-20240508192439825](image/IoC/image-20240508192439825.png)
+
+获取到的绝对路径中，在com 前面的路径是固定不变的，可以将前面的部分进行截取
 
 
 
@@ -1075,6 +1093,12 @@ while (urls.hasMoreElements()) {
 file[] files = file.listFiles();
 ```
 
+file.listFiles() 方法可以得到file文件夹下的所有内容 == 文件 + 文件夹
+
+
+
+
+
 文件夹判空
 
 ```java
@@ -1083,11 +1107,17 @@ files.
 
 
 
-获取文件类型对象的绝对路径
+获取文件类型对象的绝对路径 -- String
 
 ```java
 file.getAbsolutePath()
 ```
+
+
+
+子路径需要以/ 开头吗？
+
+
 
 判断是不是.class文件
 
@@ -1122,9 +1152,27 @@ clazz, instance;
 
 
 
+###### 遇到的错误
+
+java 会将路径中的/ 视作\\
+
+例如路径为com/java/Test.class
+
+如果将对这个路径字符串使用replace操作，是没有"/" 这个符号的，只能是找"\\\\\\\\"
+
+而如果带着com\java\Test 去调用Class.forName(filePath)， 会无法识别这个路径，因为这不是一个包格式com.java.Test
 
 
 
+
+
+##### @Di
+
+注入属性
+
+
+
+51集
 
 
 
