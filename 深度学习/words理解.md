@@ -14,7 +14,7 @@ element-wise: 在维度完全相同的两个矩阵或列表中，进行对应元
    1. y = M(x)
    2. z = L(y)
    3. 则 M৹L = M(L(x))
-2. 基本积
+2. 基本积（Hadamard product)
    1. 两个同阶矩阵中的每个对应位置的元素相乘
    2.  M৹L = $a_{i,j} \cdot b_{i,j}$
 
