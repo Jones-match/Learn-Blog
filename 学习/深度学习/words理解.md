@@ -50,3 +50,31 @@ affine：
 
 
 
+IR
+
+Intermediate Representation
+
+
+
+|| 
+
+denotes the concatenation operation.
+
+
+
+
+
+pipeline:
+
+管道（Pipeline）是一种工具，用于将数据预处理、特征选择、模型构建等一系列步骤封装成为一个整体流程。
+
+可以简化代码，避免数据泄露，并使模型的训练和预测过程更加高效和可重复。
+
+
+
+
+
+众包（crowdsourced):
+
+利用大量的网络用户来获取需要的服务和想法
+

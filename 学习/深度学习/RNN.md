@@ -1,3 +1,7 @@
+[How Recurrent Neural Networks work | by Simeon Kostadinov | Towards Data Science](https://towardsdatascience.com/learn-how-recurrent-neural-networks-work-84e975feaaf7)
+
+
+
 ![在这里插入图片描述](image/RNN/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAUHVKaWFuZy0=,size_20,color_000000,t_70,g_se,x_16#pic_center.webp)
 
 
