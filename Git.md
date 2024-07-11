@@ -54,6 +54,24 @@ git config --global color.ui auto
 
 
 
+### 设置区域的影响
+
+[git config的范围参数：local、global和system_git config --local-CSDN博客](https://blog.csdn.net/sinat_38531957/article/details/132649850)
+
+–local：这个参数用于指定配置项的**作用范围是当前 Git 仓库**。配置项将保存在当前 Git 仓库的 .git/config 文件中。这意味着配置项仅对当前仓库有效，不会影响其他 Git 仓库或全局配置。
+
+
+
+–global：使用这个参数可以**设置全局范围的 Git配置**。配置项将保存在你的用户主目录下的 .gitconfig 文件中（通常是 ~/.gitconfig）。全局配置对你的所有 Git 仓库都有效，适用于你的用户帐户。示例用法：
+
+
+
+–system：这个参数用于设置系统范围的 Git 配置。配置项将保存在系统范围的 Git 配置文件中，通常位于 /etc/gitconfig。系统配置对所有用户和所有 Git 仓库都有效。请注意，修改系统配置通常需要管理员权限。
+
+
+
+如果存在同样的配置优先级从高低为：–local、–global、–system。
+
 
 
 ## 配置
@@ -80,6 +98,10 @@ https://www.cnblogs.com/97z4moon/p/14491588.html
 https://blog.csdn.net/hakula007/article/details/106665980
 
 
+
+## 多网站公钥
+
+[Windows下Git多账号配置，同一电脑多个ssh-key的管理 - popfisher - 博客园 (cnblogs.com)](https://www.cnblogs.com/popfisher/p/5731232.html)
 
 
 
