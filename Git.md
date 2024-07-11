@@ -54,6 +54,8 @@ git config --global color.ui auto
 
 
 
+git config --list
+
 ### 设置区域的影响
 
 [git config的范围参数：local、global和system_git config --local-CSDN博客](https://blog.csdn.net/sinat_38531957/article/details/132649850)
