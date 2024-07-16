@@ -84,7 +84,7 @@ JPannel 面板 只是一个容器，不能单独显示， 只有放入Dialog 或
 
 Container c = f.getContentPane() 获取窗体容器
 
-c.setBachground(Color.WHITE)  设置窗体的颜色
+c.setBackground(Color.WHITE)  设置窗体的颜色
 
 JLabel l = new JLabel("标签文本")
 
@@ -348,7 +348,7 @@ c.setLayout(new GridLayout(3, 3, 5, 5))
 
 
 
-## GridBagLayout 网格布局管理器
+# GridBagLayout 网格布局管理器
 
 GridBagLayout
 
@@ -381,6 +381,12 @@ GridBagConstraints 常用属性：
 <img src="image/swing/image-20240710215358122.png" alt="image-20240710215358122" style="zoom:80%;" />
 
 
+
+gridx 是在横向的平移
+
+gridy 是在纵向的平移
+
+<img src="image/swing/image-20240716163955909.png" alt="image-20240716163955909" style="zoom:50%;" />
 
 
 
@@ -558,7 +564,7 @@ new JTextField("初始值")
 
 jt.setText("初始值")
 
-setFont(new font("字体"， 加粗， 大小))
+setFont(new Font("字体"， 加粗， 大小))
 
 setColumns(长度)
 
